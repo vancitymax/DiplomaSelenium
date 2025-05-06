@@ -10,8 +10,10 @@ class BasePage:
         self._driver.get(url)
 
     def _find(self,locator):
+        self._wait_for_element(locator)
         return self._driver.find_element(*locator)
-
+    def _find_all(self,locator):
+        return self._driver.find_elements(*locator)
     def _click(self,locator):
         self._wait_for_element_clickable(locator)
         self._find(locator).click()
@@ -19,7 +21,7 @@ class BasePage:
     def _wait_for_element(self,locator,timeout = 10):
         wait = WebDriverWait(self._driver, timeout)
         wait.until(visibility_of_element_located(locator))
-    def _wait_for_element_clickable(self,locator,timeout = 10):
+    def _wait_for_element_clickable(self,locator,timeout = 5):
         wait = WebDriverWait(self._driver, timeout)
         wait.until(element_to_be_clickable(locator))
 

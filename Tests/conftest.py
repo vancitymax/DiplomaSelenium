@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+
 import  pytest
 
 
@@ -19,3 +22,7 @@ def browser(request):
     yield browser
     browser.quit()
 
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    config.option.htmlpath = os.path.abspath(os.curdir)+"\\reports\\"+datetime.now().strftime("%Y%m%d-%H%M%S")+".html"
